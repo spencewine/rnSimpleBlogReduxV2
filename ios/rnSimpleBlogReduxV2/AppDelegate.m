@@ -7,6 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
  #import "AppDelegate.h"
+#import <CodePush/CodePush.h>
 
  #import <React/RCTBundleURLProvider.h>
  #import <React/RCTRootView.h>
@@ -16,7 +17,12 @@
 
  - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
  {
-     NSURL *jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+     NSURL *
+    #ifdef DEBUG
+        jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+    #else
+        jsCodeLocation = [CodePush bundleURL];
+    #endif
      [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
 
      return YES;
